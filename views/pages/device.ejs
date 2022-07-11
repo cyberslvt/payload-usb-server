@@ -12,37 +12,38 @@
   <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
   <script>
     var socket = io();
+    socket.on("connect", () => {
+      var targetId = "";
 
-    var targetId = "";
-
-    var query = JSON.parse('<%- JSON.stringify(req.query) %>');
-    if(query.name != null) {
-      if(localStorage.getItem("device-list") != null){
-        const devices = JSON.parse(localStorage.getItem("device-list"));
-        let i = 0;
-        let found = -1;
-        devices.forEach(listing => {
-          if (listing.name == query.name) {
-            found = i;
+      var query = JSON.parse('<%- JSON.stringify(req.query) %>');
+      if(query.name != null) {
+        if(localStorage.getItem("device-list") != null){
+          const devices = JSON.parse(localStorage.getItem("device-list"));
+          let i = 0;
+          let found = -1;
+          devices.forEach(listing => {
+            if (listing.name == query.name) {
+              found = i;
+            }
+            i++;
+          });
+          if (found > -1){
+            targetId = devices[found].id;
+            socket.emit("registerListen", targetId);
+            console.log("Registered listen");
+          } else {
+            console.log("Did not find device with name: '" + query.name + "'");
           }
-          i++;
-        });
-        if (found > -1){
-          targetId = devices[found].id;
-          socket.emit("registerListen", targetId);
-          console.log("Registered listen");
-        } else {
-          console.log("Did not find device with name: '" + query.name + "'");
         }
+      } else {
+        console.log("Name not in query.");
       }
-    } else {
-      console.log("Name not in query.");
-    }
 
-    if(targetId != ""){
-      socket.on('deviceConnected', function() {console.log("Device connected");});
-      socket.on('deviceLost', function() {console.log("Device lost");});
-    }
+      if(targetId != ""){
+        socket.on('deviceConnected', function() {console.log("Device connected");});
+        socket.on('deviceLost', function() {console.log("Device lost");});
+      }
+     });
   </script>
 
 </body>
