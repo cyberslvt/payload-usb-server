@@ -57,10 +57,9 @@
     // -- DEVICE DATA POPULATION --
 
     function showDevice(show){
-      console.log(show);
-      let rem = 'visible';
-      let add = 'hidden';
-      if(show) {rem = 'hidden'; add = 'visible';}
+      let rem = 'hidden';
+      let add = 'visible';
+      if(show) {rem = 'visible'; add = 'hidden';}
       $('#connection-title').removeClass(rem);
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
