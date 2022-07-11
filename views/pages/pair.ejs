@@ -4,8 +4,7 @@
   <%- include ("../partials/header.ejs") %>
 
   <style>
-    html,
-    body {
+    html, body {
       height: 100%;
     }
 
@@ -30,9 +29,11 @@
       padding: 15px;
       margin: 0 auto;
     }
+
     .form-pair .checkbox {
       font-weight: 400;
     }
+
     .form-pair .form-control {
       position: relative;
       box-sizing: border-box;
@@ -40,18 +41,33 @@
       padding: 10px;
       font-size: 16px;
     }
+
     .form-pair .form-control:focus {
       z-index: 2;
     }
+
     #inputId {
       margin-bottom: 0px;
       border-bottom-right-radius: 0;
       border-bottom-left-radius: 0;
     }
+
     #inputName {
       margin-bottom: 10px;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
+    }
+
+    .pair-alert {
+        display: block;
+        left: 0;
+        margin: auto;
+        text-align: center;
+        width: 80%;
+        z-index: 1;
+        position: absolute;
+        right: 0;
+        bottom: 40px;
     }
   </style>
 </head>
@@ -69,12 +85,18 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Pair</button>
     </form>
 
-    <div id="pair-success-alert" class="alert alert-success center-block" role="alert">
-        Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>.
+    <div id="pair-success-alert" class="alert alert-success center-block pair-alert" role="alert">
+        Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>
+        <button type="button" class="close" onclick="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
-    <div id="pair-fail-alert" class="alert alert-danger center-block" role="alert">
+    <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert">
         Failed to pair device; ''.
+        <button type="button" class="close" onclick="close()">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <script type="text/javascript" src="/js/utils.js"></script>
@@ -96,8 +118,12 @@
             $('#pair-fail-alert').text(`Failed to pair device; '${msg}'.`);
         }
 
-        $('#pair-success-alert').fadeOut();
-        $('#pair-fail-alert').fadeOut();
+        function close(){
+            $('#pair-success-alert').fadeOut();
+            $('#pair-fail-alert').fadeOut();
+        }
+
+        close();
 
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
