@@ -77,14 +77,15 @@
         background-repeat: no-repeat;
         background-position: right calc(.375em + .1875rem) center;
         background-size: calc(.75em + .375rem) calc(.75em + .375rem);
-        transition: filter 0.5s linear;
+        transition: backdrop-filter 0.5s linear;
     }
 
+    /* Generated with https://codepen.io/sosuke/pen/Pjoqqp */
     .id-device-indicator.device-online {
-        filter: invert(92%) sepia(6%) saturate(3158%) hue-rotate(48deg) brightness(84%) contrast(100%);
+        backdrop-filter: invert(92%) sepia(6%) saturate(3158%) hue-rotate(48deg) brightness(84%) contrast(100%);
     }
     .id-device-indicator.device-offline {
-        filter: invert(58%) sepia(51%) saturate(2972%) hue-rotate(324deg) brightness(89%) contrast(91%);
+        backdrop-filter: invert(58%) sepia(51%) saturate(2972%) hue-rotate(324deg) brightness(89%) contrast(91%);
     }
 
     
