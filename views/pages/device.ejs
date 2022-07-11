@@ -110,7 +110,8 @@
         socket.on('deviceLost', function() {x.connected = false;});
 
         socket.emit("isDeviceConnected", targetId, function(val) {
-                x.connected = val;
+          console.log("Recieved: " + tostring(val));
+          x.connected = val;
         });
       } else {
         document.location.href = "/";
