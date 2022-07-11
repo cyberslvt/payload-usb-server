@@ -95,7 +95,7 @@
         socket.on('deviceConnected', function() {x.connected = true;});
         socket.on('deviceLost', function() {x.connected = false;});
 
-        socket.emit("isDeviceConnected", id, (response) => {
+        socket.emit("isDeviceConnected", targetId, (response) => {
                 x.connected = response;
         });
       } else {
