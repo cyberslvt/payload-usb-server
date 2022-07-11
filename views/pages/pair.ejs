@@ -166,7 +166,7 @@
                         const devices = JSON.parse(localStorage.getItem("device-list"));
                         devices.push({name:name,id:id});
                         localStorage.setItem("device-list", JSON.stringify(devices));
-                        success(id);
+                        window.location.href = "/device?id=" + id;
                     }
                 } else {
                     fail("Device is not connected.");
