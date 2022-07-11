@@ -72,20 +72,10 @@
 
     .id-device-indicator {
         /*border-color: #dc3545;*/
-        padding-right: calc(1.5em + .75rem), calc(1.5em + .75rem);
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg' xmlns:bx='https://boxy-svg.com'%3E%3Cdefs%3E%3Cbx:grid x='0' y='0' width='12' height='12'/%3E%3C/defs%3E%3Cellipse style='stroke: rgba(0, 0, 0, 0); paint-order: fill; fill: rgb(136, 213, 112);' cx='6' cy='6' rx='6' ry='6'/%3E%3C/svg%3E"), url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg' xmlns:bx='https://boxy-svg.com'%3E%3Cdefs%3E%3Cbx:grid x='0' y='0' width='12' height='12'/%3E%3C/defs%3E%3Cellipse style='stroke: rgba(0, 0, 0, 0); paint-order: fill; fill: rgb(218, 98, 85);' cx='6' cy='6' rx='6' ry='6'/%3E%3C/svg%3E");
-        background-repeat: no-repeat, no-repeat;
-        background-position: right calc(.375em + .1875rem) center, right calc(.375em + .1875rem) center;
-        background-size: calc(.75em + .375rem) calc(.75em + .375rem), calc(.75em + .375rem) calc(.75em + .375rem);
-        transition: background-color 0.5s linear;
-    }
-
-    /* Generated with https://codepen.io/sosuke/pen/Pjoqqp */
-    .id-device-indicator.device-online {
-        background-color: rgba(255,255,255,1), rgba(255,255,255,0);
-    }
-    .id-device-indicator.device-offline {
-        background-color: rgba(255,255,255,0), rgba(255,255,255,1);
+        padding-right: calc(1.5em + .75rem);
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) centerr;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
 
     
@@ -143,6 +133,47 @@
         function closeAlerts(){
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeOut();
+        }
+
+        function lerp(a, b, t){
+            if(t >=1) {return b;
+            if(t <=0) {return a;}
+            return a + (b - a) * t;
+        }
+
+        function colorIndicator(online, alpha){
+            let redColor = [218, 98, 85];
+            let greenColor = [136, 213, 112];
+
+            let colorV=[0,0,0];
+            colorV[0] = lerp(redColor[0], greenColor[0], alpha);
+            colorV[1] = lerp(redColor[1], greenColor[1], alpha);
+            colorV[2] = lerp(redColor[2], greenColor[2], alpha);
+
+            let color = `${colorV[0]}, ${colorV[1]}, ${colorV[2]}`;
+
+            let svg = `data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg' xmlns:bx='https://boxy-svg.com'%3E%3Cdefs%3E%3Cbx:grid x='0' y='0' width='12' height='12'/%3E%3C/defs%3E%3Cellipse style='stroke: rgba(0, 0, 0, 0); paint-order: fill; fill: rgb(${color});' cx='6' cy='6' rx='6' ry='6'/%3E%3C/svg%3E`;
+            $('#inputId').css("background-image", `url("${svg}")`);
+        }
+
+        let frame = 0;
+        let animId = 0;
+        let totalFrames = 500;
+        function animateIndicatorFrame(show){
+            let alpha = frame / totalFrames;
+            if(!show) {alpha = 1-alpha;}
+            colorIndicator(alpha);
+            frame++;
+            if(frame > totalFrames){
+                clearInterval(animId);
+                animId = 0;
+            }
+        }
+
+        function animateIndicator(show){
+            if(animId > 0){clearInterval(animId);}
+            frame = 0;
+            animId = setInterval(function() {animateIndicatorFrame(show);}, 1);
         }
 
         close();
