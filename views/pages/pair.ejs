@@ -93,7 +93,7 @@
     </div>
 
     <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert" style="display: none;">
-        Failed to pair device - ''
+        Failed to pair device
         <button type="button" class="close" onclick="close()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -108,14 +108,14 @@
             $('#pair-fail-alert').fadeOut();
             $('#pair-success-alert').fadeIn();
 
-            $('#success-alert-link').attr("href", `/device?id=${deviceId}`);
+            $('#success-alert-link').attr("href", `/device?id=${deviceId} <button type="button" class="close" onclick="close()"><span aria-hidden="true">&times;</span></button>`);
         }
 
         function fail(msg) {
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeIn();
 
-            $('#pair-fail-alert').text(`Failed to pair device - '${msg}'`);
+            $('#pair-fail-alert').html(`Failed to pair device - '${msg}' <button type="button" class="close" onclick="close()"><span aria-hidden="true">&times;</span></button>`);
         }
 
         function close(){
