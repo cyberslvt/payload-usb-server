@@ -17,12 +17,12 @@
 
     var query = JSON.parse('<%- JSON.stringify(req.query) %>');
     if(query.name) {
-      if(localStorage.getItem("device-list") !== null){
+      if(localStorage.getItem("device-list") != null){
         const devices = JSON.parse(localStorage.getItem("device-list"));
         let i = 0;
         let found = -1;
         devices.forEach(listing => {
-          if (listing.name == "${name}") {
+          if (listing.name == query.name) {
             found = i;
           }
           i++;
