@@ -134,6 +134,32 @@
             if(!stringValidation(id) || id == "") {fail("Id is not valid. (None of these characters '<>,.\"';:{}%$=+`' are allowed)"); return false;}
             if(!stringValidation(name) || name == "") {fail("Name is not valid. (None of these characters '<>,.\"';:{}%$=+`' are allowed)"); return false;}
 
+            if(localStorage.getItem("device-list") != null){
+                const devices = JSON.parse(localStorage.getItem("device-list"));
+                let i = 0;
+                let found = -1;
+                devices.forEach(listing => {
+                    if (listing.name == name) {
+                        found = i;
+                    }
+                    i++;
+                });
+                if (found > -1){
+                    fail("Name is already used."); return false;
+                }
+
+                found = -1;
+                devices.forEach(listing => {
+                    if (listing.id == id) {
+                        found = i;
+                    }
+                    i++;
+                });
+                if (found > -1){
+                    fail("Id is already paired."); return false;
+                }
+            }
+
             socket.emit("isDeviceConnected", id, (connected) => {
                 if(connected){
                     if(localStorage.getItem("device-list") != null){

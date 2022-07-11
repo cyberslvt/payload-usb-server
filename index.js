@@ -38,7 +38,7 @@ const app = express()
       if(!utils.stringValidation(name)) {res.send("<script>window.location.href = '/';</script>");}
 
       res.send(`<body><script>
-      if(localStorage.getItem("device-list") !== null){
+      if(localStorage.getItem("device-list") != null){
         const devices = JSON.parse(localStorage.getItem("device-list"));
         let i = 0;
         let found = -1;
