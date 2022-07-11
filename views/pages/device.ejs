@@ -29,7 +29,7 @@
         });
         if (found > -1){
           targetId = devices[found].id;
-          socket.emit(registerListen, targetId);
+          socket.emit("registerListen", targetId);
         }
       }
     }
