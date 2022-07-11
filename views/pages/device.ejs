@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <%- include ("../partials/header.ejs") %>
+</head>
+
+<body>
+
+  <%- include ("../partials/nav.ejs") %>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
+
+    var targetId = "";
+
+    var query = JSON.parse('<%- JSON.stringify(req.query) %>');
+    if(query.name) {
+      if(localStorage.getItem("device-list") !== null){
+        const devices = JSON.parse(localStorage.getItem("device-list"));
+        let i = 0;
+        let found = -1;
+        devices.forEach(listing => {
+          if (listing.name == "${name}") {
+            found = i;
+          }
+          i++;
+        });
+        if (found > -1){
+          targetId = devices[found].id;
+          socket.emit(registerListen, targetId);
+        }
+      }
+    }
+
+    if(targetId != ""){
+      socket.on('deviceConnected', function() {console.log("Device connected");});
+      socket.on('deviceLost', function() {console.log("Device lost");});
+    }
+  </script>
+
+</body>
+</html>

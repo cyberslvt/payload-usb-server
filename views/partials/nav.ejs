@@ -1,33 +1,99 @@
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
-  <div class="container">
-    <ul class="nav navbar-nav">
-      <li class="active">
-        <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
+<nav class="navbar navbar-expand-md fixed-top navbar-dark bg-dark">
+  <a class = "navbar-brand" href="/">
+    Payload USB
+  </a>
+  <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="navbar-collapse offcanvas-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class = "nav-link" href="/"><span class="fas fa-home"></span> Home</a>
       </li>
-      <li>
-        <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span class="glyphicon glyphicon-user"></span> How Heroku Works</a>
+
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="unused" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-microchip"></span> Devices <span class="caret"></span></a>
+        <div class="dropdown-menu" aria-labelledby="dropdown02" id="devices-dropdown">
+            <h6 class="dropdown-header">Paired Devices</h6>
+           
+
+            <div class="dropdown-divider" id="pair-divider"></div>
+            <a class="dropdown-item" href="/pair"> Pair new device </a>
+        </div>
       </li>
-      <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-info-sign"></span> Getting Started Guides <span class="caret"></span></a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-ruby">Getting Started on Heroku with Ruby</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-nodejs">Getting Started on Heroku with Node.js</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-php">Getting Started on Heroku with PHP</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-python">Getting Started on Heroku with Python</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-java">Getting Started on Heroku with Java</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-go">Getting Started on Heroku with Go</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-clojure">Getting Started on Heroku with Clojure</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-scala">Getting Started on Heroku with Scala</a></li>
-            <li class="divider"></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-heroku-and-connect-without-local-dev">Getting Started on Heroku with Heroku Connect</a></li>
-            <li><a href="https://devcenter.heroku.com/articles/getting-started-with-jruby">Getting Started on Heroku with Ruby (Microsoft Windows)</a></li>
-          </ul>
+
+      <li class="nav-item navbar-right">
+        <a class="nav-link" href="/settings"><span class="fas fa-book"></span> Settings</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
-      <li class="navbar-right">
-        <a href="https://devcenter.heroku.com"><span class="glyphicon glyphicon-book"></span> Heroku Dev Center</a>
+      <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="unused" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fas fa-info-circle"></span> Resources <span class="caret"></span></a>
+          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown01">
+            <a class = "dropdown-item" href="#">Documentation</a>
+            <div class="dropdown-divider"></div>
+            <a class = "dropdown-item" href="https://github.com/cyberslvt/payload-usb-server">Payload USB Server Source Code</a>
+            <a class = "dropdown-item" href="https://github.com/cyberslvt/payload-usb">Payload USB Source Code</a>
+          </ul>
       </li>
     </ul>
   </div>
 </nav>
+
+<div class="modal fade" id="forget-confirm-modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm forget device</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p id="forget-confirm-text">Are you sure you want to forget ''?</p>
+      </div>
+      <div class="modal-footer">
+        <button id="forget-confirm-confirm" type="button" class="btn btn-primary">Forget</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $('li.active:not(.dropdown)').removeClass('active');
+    $('a[href="' + location.pathname + '"]').closest('li').addClass('active'); 
+  });
+
+  $('[data-toggle="offcanvas"]').on('click', function(e) {
+    e.preventDefault();
+    $('.offcanvas-collapse').toggleClass('open');
+  });
+
+  var confirmingDevice = "";
+
+  function forgetDevice(name){
+    $('#forget-confirm-modal').modal("show");
+    $("#forget-confirm-text").text(`Are you sure you want to forget device '${name}'?`);
+    confirmingDevice = name;
+  }
+
+  $('#forget-confirm-confirm').on('click', function(){
+    window.location.href = `/forget?name=${encodeURIComponent(confirmingDevice)}`;
+  });
+
+  if(localStorage.getItem("device-list") !== null){
+    // Generate device list from storage
+    const devices = JSON.parse(localStorage.getItem("device-list"));
+    devices.forEach(listing => {
+      let html = `<div id="Dropdown-Device-${listing.name}" class="device-listing horizontal-align"> <a class="dropdown-item" href="/device?name=${encodeURIComponent(listing.name)}"> ${listing.name} </a> <button type="button" class="close device-forget" onclick="forgetDevice('${listing.name}')" data-toggle="tooltip" title="Forget this device">&times;</button></div>`;
+      $(html).insertBefore($('#pair-divider'));
+    });
+  } else {
+    const empty = [];
+    localStorage.setItem("device-list", JSON.stringify(empty));
+  }
+
+</script>
