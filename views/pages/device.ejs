@@ -3,13 +3,25 @@
 <head>
   <%- include ("../partials/header.ejs") %>
 
+  <style>
+    .hidden-scaled {
+      max-height: 0;
+      transition: max-height 0.15s ease-out;
+    }
+
+    .visible-scaled {
+      max-height: 1000px;
+      transition: max-height 0.25s ease-in;
+    }
+  </style>
+
 </head>
 
 <body>
 
   <%- include ("../partials/nav.ejs") %>
 
-  <main role="main" id="device-wrapper" class="container hidden">
+  <main role="main" id="device-wrapper" class="container hidden-scaled">
     <div id="device-title-wrapper" class="my-3 p-3 bg-white rounded box-shadow">
       <h6 class="border-bottom border-gray pb-2 mb-0" id="device-title">Test Device</h6>
       <div class="pt-3"></div>
@@ -65,8 +77,8 @@
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
-      $('#device-wrapper').removeClass(add);
-      $('#device-wrapper').addClass(rem);
+      $('#device-wrapper').removeClass(add+"-scaled");
+      $('#device-wrapper').addClass(rem+"-scaled");
 
       if(show){
         generateData();
