@@ -12,6 +12,8 @@
 
   <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
   <script>
+    var connected = false;
+
     var socket = io();
     socket.on("connect", () => {
       var targetId = "";
@@ -41,8 +43,13 @@
       }
 
       if(targetId != ""){
-        socket.on('deviceConnected', function() {console.log("Device connected");});
-        socket.on('deviceLost', function() {console.log("Device lost");});
+        socket.on('deviceConnected', function() {console.log("Device connected"); connected = true;});
+        socket.on('deviceLost', function() {console.log("Device lost"); connected = false;});
+
+        socket.emit("isDeviceConnected", id, (response) => {
+                connected = response;
+                console.log("Connected: " + toString(response));
+        });
       }
      });
   </script>
