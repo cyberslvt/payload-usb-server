@@ -108,7 +108,7 @@
             $('#pair-fail-alert').fadeOut();
             $('#pair-success-alert').fadeIn();
 
-            $('#success-alert-link').attr("href", `/device?id=${deviceId} <button type="button" class="close" onclick="close()"><span aria-hidden="true">&times;</span></button>`);
+            $('#success-alert-link').attr("href", `/device?id=${deviceId}`);
         }
 
         function fail(msg) {
