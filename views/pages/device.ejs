@@ -57,6 +57,7 @@
     // -- DEVICE DATA POPULATION --
 
     function showDevice(show){
+      console.log(show);
       let rem = 'visible';
       let add = 'hidden';
       if(show) {rem = 'hidden'; add = 'visible';}
@@ -110,7 +111,7 @@
         socket.on('deviceLost', function() {x.connected = false;});
 
         socket.emit("isDeviceConnected", targetId, function(val) {
-          console.log("Recieved: " + toString(val));
+          console.log("Recieved: " + val);
           x.connected = val;
         });
       } else {
@@ -118,7 +119,7 @@
       }
 
       x.registerListener(function(val) {
-        console.log("Connected: " + toString(val));
+        console.log("Connected: " + val);
         showDevice(val);
       });
       // -- EVENT BINDING --
