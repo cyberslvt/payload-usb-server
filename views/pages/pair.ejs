@@ -104,11 +104,12 @@
     <script>
         var socket = io();
 
-        function success(deviceId) {
+        // unused
+        function success(deviceName) {
             $('#pair-fail-alert').fadeOut();
             $('#pair-success-alert').fadeIn();
 
-            $('#success-alert-link').attr("href", `/device?id=${deviceId}`);
+            $('#success-alert-link').attr("href", `/device?name=${encodeURIComponent(deviceName)}`);
         }
 
         function fail(msg) {
@@ -166,7 +167,7 @@
                         const devices = JSON.parse(localStorage.getItem("device-list"));
                         devices.push({name:name,id:id});
                         localStorage.setItem("device-list", JSON.stringify(devices));
-                        window.location.href = "/device?id=" + id;
+                        window.location.href = "/device?name=" + encodeURIComponent(name);
                     }
                 } else {
                     fail("Device is not connected.");
