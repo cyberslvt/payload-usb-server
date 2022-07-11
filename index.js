@@ -160,7 +160,7 @@ setInterval(heartbeat, 4000);
 io.on('connection', async(socket) => {
   let targetDevice = "";
 
-  print("[SOCKET.IO] Connection");
+  console.log("[SOCKET.IO] Connection");
 
   io.on('registerListen', async(deviceId) => {
     listeningSockets[deviceId] = socket.id;
