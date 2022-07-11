@@ -168,6 +168,23 @@ io.on('connection', async(socket) => {
     console.log("[SOCKET.IO] Registered listen for: " + deviceId);
   });
 
+  socket.on('isDeviceConnected', async(deviceId, callback) => {
+    let i = 0;
+    let found = -1;
+    devices.forEach(device => {
+      if(device.id == deviceId){
+        found = i;
+      }
+      i++;
+    });
+
+    if(found > -1){
+      callback(true);
+    } else {
+      callback(false);
+    }
+  });
+
   io.on('disconnect', () => {
     if(listeningSockets[targetDevice])
     {

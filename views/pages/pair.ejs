@@ -69,27 +69,60 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Pair</button>
     </form>
 
+    <div id="pair-success-alert" class="alert alert-success" role="alert">
+        Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>.
+    </div>
+
+    <div id="pair-fail-alert" class="alert alert-danger" role="alert">
+        Failed to pair device; ''.
+    </div>
+
     <script type="text/javascript" src="/js/utils.js"></script>
     <script>
+        var socket = io();
+
+        function success(deviceId) {
+            $('#pair-fail-alert').fadeOut();
+            $('#pair-success-alert').fadeIn();
+
+            $('#success-alert-link').attr("href", `/device?id=${deviceId}`);
+        }
+
+        function fail(msg) {
+            $('#pair-success-alert').fadeOut();
+            $('#pair-fail-alert').fadeIn();
+
+            $('#pair-fail-alert').text(`Failed to pair device; '${msf}'.`);
+        }
+
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
 
             var id = $('#inputId').val();
             var name = $('#inputName').val();
 
-            if(!stringValidation(id) || id == "") {return false;}
-            if(!stringValidation(name) || name == "") {return false;}
+            if(!stringValidation(id) || id == "") {fail("Invalid Id"); return false;}
+            if(!stringValidation(name) || name == "") {fail("Invalid Name"); return false;}
 
-            if(localStorage.getItem("device-list") !== null){
-                const devices = JSON.parse(localStorage.getItem("device-list"));
-                devices.push({name:name,id:id});
-                localStorage.setItem("device-list", JSON.stringify(devices));
-            }
+            socket.emit("isDeviceConnected", id, (connected) => {
+                if(connected){
+                    if(localStorage.getItem("device-list") != null){
+                        const devices = JSON.parse(localStorage.getItem("device-list"));
+                        devices.push({name:name,id:id});
+                        localStorage.setItem("device-list", JSON.stringify(devices));
+                        success(id);
+                    }
+                } else {
+                    fail("Device is not connected.");
+                }
+            });
 
             return false;
         }
 
-        $('#pair-form').on('submit', processForm);
+        socket.on("connect", () => {
+            $('#pair-form').on('submit', processForm);
+        });
     </script>
 
 </body>
