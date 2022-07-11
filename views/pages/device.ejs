@@ -38,7 +38,7 @@
   </main>
 
   <div id="connection-title" class="d-flex justify-content-center align-items-center visible" style="height:50px;margin-top:50px;">
-    <h2>Waiting for connection</h2>
+    <h2 id="connection-title-text">Waiting for connection from ''</h2>
   </div>
   <div id="connection-spinner" class="d-flex justify-content-center align-items-center visible" style="height:50px;">
     <div class="spinner-border text-dark" role="status"></div> 
@@ -114,6 +114,8 @@
             targetId = devices[found].id;
             socket.emit("registerListen", targetId);
             console.log("Registered listen");
+
+            $('#connection-title-text').text(`Waiting for connection from '${query.name}'`);
           } else {
             console.log("Did not find paired device with name: '" + query.name + "'");
           }
