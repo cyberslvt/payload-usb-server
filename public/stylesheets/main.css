@@ -43,6 +43,18 @@ body {
     padding-left: 10px;
 }
 
+.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 2s linear;
+}
+
+.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 2s, opacity 2s linear;
+}
+
 /* Bootstrap Overrides */
 .spinner-border {
 	display: inline-block;
