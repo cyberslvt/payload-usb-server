@@ -141,16 +141,13 @@
             return a + (b - a) * t;
         }
 
-        function colorIndicator(online, alpha){
+        // dumb solution - will fix later
+        function colorIndicator(online){
             let redColor = [218, 98, 85];
             let greenColor = [136, 213, 112];
 
-            console.log(alpha);
-
-            let colorV=[0,0,0];
-            colorV[0] = lerp(redColor[0], greenColor[0], alpha);
-            colorV[1] = lerp(redColor[1], greenColor[1], alpha);
-            colorV[2] = lerp(redColor[2], greenColor[2], alpha);
+            let colorV=redColor;
+            if(online) {colorV=greenColor;}
 
             let color = `${colorV[0]}, ${colorV[1]}, ${colorV[2]}`;
 
@@ -158,25 +155,19 @@
             $('#inputId').css("background-image", `url("${svg}")`);
         }
 
-        let frame = 0;
-        let animId = 0;
-        let totalFrames = 500;
-        function animateIndicatorFrame(show){
-            let alpha = frame / totalFrames;
-            if(!show) {alpha = 1-alpha;}
-            colorIndicator(show, alpha);
-            frame++;
-            if(frame > totalFrames){
-                clearInterval(animId);
-                animId = 0;
-            }
-        }
+        $('#inputId').on('input',function(e){
+            var id = $('#inputId').val();
 
-        function animateIndicator(show){
-            if(animId > 0){clearInterval(animId);}
-            frame = 0;
-            animId = setInterval(function() {animateIndicatorFrame(show);}, 1);
-        }
+            if(id == ""){
+                $('#inputId').css("background-image", "");
+                return;
+            }
+
+            if(!stringValidation(id) || id == "") {fail("Id is not valid. (None of these characters '<>,.\"';:{}%$=+`' are allowed)"); return false;}
+            socket.emit("isDeviceConnected", id, (connected) => {
+                colorIndicator(connected);
+            });
+        });
 
         close();
 
