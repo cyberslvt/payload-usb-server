@@ -42,6 +42,20 @@
       }
     }
 
+    // -- DEVICE DATA POPULATION --
+    function generateData(){
+      let html = `
+        <button type="button" class="btn btn-dark">Toggle LED</button>
+      `;
+      $(html).appendTo($('#device-data-container'));
+    }
+
+
+    function clearData() {
+      $('#device-data-container').empty();
+    }
+    // -- DEVICE DATA POPULATION --
+
     function showDevice(show){
       let rem = 'visible';
       let add = 'hidden';
@@ -107,18 +121,6 @@
         showDevice(val);
       });
       // -- EVENT BINDING --
-
-      // -- DEVICE DATA POPULATION --
-      function generateData(){
-        let html = `
-        <button type="button" class="btn btn-dark">Toggle LED</button>
-        `;
-        $(html).appendTo($('#device-data-container'));
-      }
-
-      function clearData() {
-        $('#device-data-container').empty();
-      }
      });
   </script>
 
