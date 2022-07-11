@@ -61,18 +61,18 @@ const app = express()
   
   // -- DEVICE CALLS --
   .get('/device-connect', function(req,res){
+    res.sendStatus(100);
     let id = req.query.id;
     if (id != undefined) {
       registerDevice(id);
     }
-    setTimeout(() => { res.sendStatus(100); }, 1000);
   })
   .get('/device-ping', function(req, res){
+    res.sendStatus(100);
     let id = req.query.id;
     if (id != undefined) {
       pingDevice(id);
     }
-    setTimeout(() => { res.sendStatus(100); }, 1000);
   })
   // -- DEVICE CALLS --
 
