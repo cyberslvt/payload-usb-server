@@ -30,6 +30,7 @@
         if (found > -1){
           targetId = devices[found].id;
           socket.emit("registerListen", targetId);
+          console.log("Registered listen");
         } else {
           console.log("Did not find device with name: '" + query.name + "'");
         }
