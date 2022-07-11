@@ -6,12 +6,16 @@
   <style>
     .hidden-scaled {
       max-height: 0;
-      transition: max-height 0.15s ease-out;
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-top: 0;
+      padding-bottom: 0;
+      transition: max-height 0.5s ease, margin-top 0.5s ease, margin-bottom 0.5s ease, padding-top 0.5s ease, padding-bottom 0.5s ease;
     }
 
     .visible-scaled {
       max-height: 1000px;
-      transition: max-height 0.25s ease-in;
+      transition: max-height 0.5s ease, margin-top 0.5s ease, margin-bottom 0.5s ease, padding-top 0.5s ease, padding-bottom 0.5s ease;
     }
   </style>
 
@@ -77,8 +81,8 @@
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
-      $('#device-wrapper').removeClass(add+"-scaled");
-      $('#device-wrapper').addClass(rem+"-scaled");
+      $('#device-wrapper, #device-title-wrapper, #device-title').removeClass(add+"-scaled");
+      $('#device-wrapper, #device-title-wrapper, #device-title').addClass(rem+"-scaled");
 
       if(show){
         generateData();
