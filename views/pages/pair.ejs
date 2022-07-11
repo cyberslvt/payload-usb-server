@@ -74,7 +74,7 @@
         /*border-color: #dc3545;*/
         padding-right: calc(1.5em + .75rem);
         background-repeat: no-repeat;
-        background-position: right calc(.375em + .1875rem) centerr;
+        background-position: right calc(.375em + .1875rem) center;
         background-size: calc(.75em + .375rem) calc(.75em + .375rem);
     }
 
@@ -145,12 +145,12 @@
             let redColor = [218, 98, 85];
             let greenColor = [136, 213, 112];
 
+            console.log(alpha);
+
             let colorV=[0,0,0];
             colorV[0] = lerp(redColor[0], greenColor[0], alpha);
             colorV[1] = lerp(redColor[1], greenColor[1], alpha);
             colorV[2] = lerp(redColor[2], greenColor[2], alpha);
-
-            console.log(colorV);
 
             let color = `${colorV[0]}, ${colorV[1]}, ${colorV[2]}`;
 
