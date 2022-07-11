@@ -87,14 +87,14 @@
 
     <div id="pair-success-alert" class="alert alert-success center-block pair-alert" role="alert" style="display: none;">
         Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>
-        <button type="button" class="close" onclick="close()">
+        <button type="button" class="close" onclick="closeAlerts()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
     <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert" style="display: none;">
         Failed to pair device
-        <button type="button" class="close" onclick="close()">
+        <button type="button" class="close" onclick="closeAlerts()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -115,10 +115,10 @@
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeIn();
 
-            $('#pair-fail-alert').html(`Failed to pair device - '${msg}' <button type="button" class="close" onclick="close()"><span aria-hidden="true">&times;</span></button>`);
+            $('#pair-fail-alert').html(`Failed to pair device - '${msg}' <button type="button" class="close" onclick="closeAlerts()"><span aria-hidden="true">&times;</span></button>`);
         }
 
-        function close(){
+        function closeAlerts(){
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeOut();
         }
