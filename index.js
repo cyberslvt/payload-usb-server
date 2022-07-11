@@ -60,15 +60,15 @@ const app = express()
   // -- DEVICE PAGES --
   
   // -- DEVICE CALLS --
-  .get('/deviceconnect', function(req,res){
-    res.sendStatus(100);
+  .get('/device-connect', function(req,res){
+    res.send('OK');
     let id = req.query.id;
     if (id != undefined) {
       registerDevice(id);
     }
   })
-  .get('/deviceping', function(req, res){
-    res.sendStatus(100);
+  .get('/device-ping', function(req, res){
+    res.send('OK');
     let id = req.query.id;
     if (id != undefined) {
       pingDevice(id);
