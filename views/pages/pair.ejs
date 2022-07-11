@@ -164,7 +164,7 @@
         function animateIndicatorFrame(show){
             let alpha = frame / totalFrames;
             if(!show) {alpha = 1-alpha;}
-            colorIndicator(alpha);
+            colorIndicator(show, alpha);
             frame++;
             if(frame > totalFrames){
                 clearInterval(animId);
