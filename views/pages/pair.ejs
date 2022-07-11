@@ -69,6 +69,15 @@
         right: 0;
         bottom: 40px;
     }
+
+    .id-device-online {
+        /*border-color: #dc3545;*/
+        padding-right: calc(1.5em + .75rem);
+        background-image: url("data%3Aimage%2Fsvg%2Bxml%2C%3Csvg%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Abx%3D%22https%3A%2F%2Fboxy-svg.com%22%3E%3Cdefs%3E%3Cbx%3Agrid%20x%3D%220%22%20y%3D%220%22%20width%3D%2212%22%20height%3D%2212%22%2F%3E%3C%2Fdefs%3E%3Cellipse%20style%3D%22stroke%3A%20rgba%280%2C%200%2C%200%2C%200%29%3B%20paint-order%3A%20fill%3B%20fill%3A%20rgb%28136%2C%20213%2C%20112%29%3B%22%20cx%3D%226%22%20cy%3D%226%22%20rx%3D%226%22%20ry%3D%226%22%2F%3E%3C%2Fsvg%3E");
+        background-repeat: no-repeat;
+        background-position: right calc(.375em + .1875rem) center;
+        background-size: calc(.75em + .375rem) calc(.75em + .375rem);
+    }
   </style>
 </head>
 
@@ -78,15 +87,8 @@
 
     <form id="pair-form" class="form-pair">
       <h1 class="h3 mb-3 font-weight-normal">Pair new device</h1>
-      <div class="form-row">
-        <div class="col">
-            <label for="inputId" class="sr-only">Pair ID</label>
-            <input type="text" id="inputId" class="form-control" placeholder="ID" required="" autofocus="" autocomplete="off">
-        </div>
-        <div class="col">
-            <div class="ml-2 rounded-circle"></div>
-        </div>
-      </div>
+      <label for="inputId" class="sr-only">Pair ID</label>
+      <input type="text" id="inputId" class="form-control id-device-online" placeholder="ID" required="" autofocus="" autocomplete="off">
      
       <label for="inputName" class="sr-only">Friendly Name</label>
       <input type="text" id="inputName" class="form-control" placeholder="Name" required="" autocomplete="off">
