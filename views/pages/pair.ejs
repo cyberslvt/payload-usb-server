@@ -85,15 +85,15 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Pair</button>
     </form>
 
-    <div id="pair-success-alert" class="alert alert-success center-block pair-alert" role="alert">
+    <div id="pair-success-alert" class="alert alert-success center-block pair-alert" role="alert" style="display: none;">
         Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>
         <button type="button" class="close" onclick="close()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
-    <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert">
-        Failed to pair device; ''.
+    <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert" style="display: none;">
+        Failed to pair device - ''
         <button type="button" class="close" onclick="close()">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -115,7 +115,7 @@
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeIn();
 
-            $('#pair-fail-alert').text(`Failed to pair device; '${msg}'.`);
+            $('#pair-fail-alert').text(`Failed to pair device - '${msg}'`);
         }
 
         function close(){
@@ -131,8 +131,8 @@
             var id = $('#inputId').val();
             var name = $('#inputName').val();
 
-            if(!stringValidation(id) || id == "") {fail("Invalid Id"); return false;}
-            if(!stringValidation(name) || name == "") {fail("Invalid Name"); return false;}
+            if(!stringValidation(id) || id == "") {fail("Id is not valid. (None of these characters '<>,.\"';:{}%$=+`' are allowed)"); return false;}
+            if(!stringValidation(name) || name == "") {fail("Name is not valid. (None of these characters '<>,.\"';:{}%$=+`' are allowed)"); return false;}
 
             socket.emit("isDeviceConnected", id, (connected) => {
                 if(connected){
