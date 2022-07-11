@@ -109,7 +109,11 @@ function pingDevice(id) {
     i++;
   });
 
-  devices[found].pingTime = Date.now();
+  if(found > -1){
+    devices[found].pingTime = Date.now();
+  } else {
+    console.log("Could not find device with id: " + id);
+  }
 }
 
 function deregisterDevice(id) {
