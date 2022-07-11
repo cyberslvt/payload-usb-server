@@ -9,27 +9,62 @@
 
   <%- include ("../partials/nav.ejs") %>
 
-  <div class="d-flex justify-content-center align-items-center visible" style="height:50px;margin-top:50px;">
-    <h2>Waiting for connection</h2>
-  </div>
-  <div class="d-flex justify-content-center align-items-center visible" style="height:50px;">
-    <div class="spinner-border text-dark" role="status"></div> 
-  </div>
-
-  <main role="main" class="container hidden" style="visibility: hidden; opacity: 0;">
-    <div class="my-3 p-3 bg-white rounded box-shadow">
+  <main role="main" id="device-wrapper" class="container hidden">
+    <div id="device-title-wrapper" class="my-3 p-3 bg-white rounded box-shadow">
       <h6 class="border-bottom border-gray pb-2 mb-0" id="device-title">Test Device</h6>
+    </div>
+    <div id="device-data-container" class="container">
+
     </div>
   </main>
 
+  <div id="connection-title" class="d-flex justify-content-center align-items-center visible" style="height:50px;margin-top:50px;">
+    <h2>Waiting for connection</h2>
+  </div>
+  <div id="connection-spinner" class="d-flex justify-content-center align-items-center visible" style="height:50px;">
+    <div class="spinner-border text-dark" role="status"></div> 
+  </div>
+
   <script src="https://cdn.socket.io/4.5.0/socket.io.min.js" integrity="sha384-7EyYLQZgWBi67fBtVxw60/OWl1kjsfrPFcaU0pp0nAh+i8FD068QogUvg85Ewy1k" crossorigin="anonymous"></script>
   <script>
-    var connected = false;
+    x = {
+      cInternal: 10,
+      cListener: function(val) {},
+      set connected(val) {
+        this.cInternal = val;
+        this.cListener(val);
+      },
+      get connected() {
+        return this.cInternal;
+      },
+      registerListener: function(listener) {
+        this.cListener = listener;
+      }
+    }
+
+    function showDevice(show){
+      let rem = 'visible';
+      let add = 'hidden';
+      if(show) {rem = 'hidden'; add = 'visible';}
+      $('#connection-title').removeClass(rem);
+      $('#connection-title').addClass(add);
+      $('#connection-spinner').removeClass(rem);
+      $('#connection-spinner').addClass(add);
+      $('#device-wrapper').removeClass(add);
+      $('#device-wrapper').addClass(rem);
+
+      if(show){
+        generateData();
+      } else {
+        clearData();
+      }
+    }
 
     var socket = io();
     socket.on("connect", () => {
       var targetId = "";
 
+      // -- QUERY VALIDATION --
       var query = JSON.parse('<%- JSON.stringify(req.query) %>');
       if(query.name != null) {
         if(localStorage.getItem("device-list") != null){
@@ -53,15 +88,36 @@
       } else {
         console.log("Name not in query.");
       }
+      // -- QUERY VALIDATION --
 
+      // -- EVENT BINDING --
       if(targetId != ""){
-        socket.on('deviceConnected', function() {console.log("Device connected"); connected = true;});
-        socket.on('deviceLost', function() {console.log("Device lost"); connected = false;});
+        socket.on('deviceConnected', function() {x.connected = true;});
+        socket.on('deviceLost', function() {x.connected = false;});
 
         socket.emit("isDeviceConnected", id, (response) => {
-                connected = response;
-                console.log("Connected: " + toString(response));
+                x.connected = response;
         });
+      } else {
+        document.location.href = "/";
+      }
+
+      x.registerListener(function(val) {
+        console.log("Connected: " + toString(val));
+        showDevice(val);
+      });
+      // -- EVENT BINDING --
+
+      // -- DEVICE DATA POPULATION --
+      function generateData(){
+        let html = `
+        <button type="button" class="btn btn-dark">Toggle LED</button>
+        `;
+        $(html).appendTo($('#device-data-container'));
+      }
+
+      function clearData() {
+        $('#device-data-container').empty();
       }
      });
   </script>
