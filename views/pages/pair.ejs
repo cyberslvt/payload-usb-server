@@ -155,7 +155,7 @@
             $('#inputId').css("background-image", `url("${svg}")`);
         }
 
-        $('#inputId').on('input',function(e){
+        function checkDeviceIdOnline(){
             var id = $('#inputId').val();
 
             if(id == ""){
@@ -167,7 +167,17 @@
             socket.emit("isDeviceConnected", id, (connected) => {
                 colorIndicator(connected);
             });
+        }
+
+        $('#inputId').on('input',function(e){
+            checkDeviceIdOnline();
         });
+
+        function heartbeat(){
+            checkDeviceIdOnline();
+        }
+
+        setInterval(heartbeat, 500);
 
         close();
 
