@@ -6,6 +6,7 @@ body {
     padding-top: 56px;
     background-color: #f5f5f5;
     color: #343a40; /* dark text color */
+    font-family: 'Roboto', sans-serif;
 }
 
 @media (max-width: 767.98px) {
