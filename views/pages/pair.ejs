@@ -69,11 +69,11 @@
       <button class="btn btn-lg btn-primary btn-block" type="submit">Pair</button>
     </form>
 
-    <div id="pair-success-alert" class="alert alert-success" role="alert">
+    <div id="pair-success-alert" class="alert alert-success center-block" role="alert">
         Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>.
     </div>
 
-    <div id="pair-fail-alert" class="alert alert-danger" role="alert">
+    <div id="pair-fail-alert" class="alert alert-danger center-block" role="alert">
         Failed to pair device; ''.
     </div>
 
@@ -93,8 +93,11 @@
             $('#pair-success-alert').fadeOut();
             $('#pair-fail-alert').fadeIn();
 
-            $('#pair-fail-alert').text(`Failed to pair device; '${msf}'.`);
+            $('#pair-fail-alert').text(`Failed to pair device; '${msg}'.`);
         }
+
+        $('#pair-success-alert').fadeOut();
+        $('#pair-fail-alert').fadeOut();
 
         function processForm(e) {
             if (e.preventDefault) e.preventDefault();
