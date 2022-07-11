@@ -16,7 +16,7 @@
     var targetId = "";
 
     var query = JSON.parse('<%- JSON.stringify(req.query) %>');
-    if(query.name) {
+    if(query.name != null) {
       if(localStorage.getItem("device-list") != null){
         const devices = JSON.parse(localStorage.getItem("device-list"));
         let i = 0;
@@ -30,8 +30,12 @@
         if (found > -1){
           targetId = devices[found].id;
           socket.emit("registerListen", targetId);
+        } else {
+          console.log("Did not find device with name: '" + query.name + "'");
         }
       }
+    } else {
+      console.log("Name not in query.");
     }
 
     if(targetId != ""){
