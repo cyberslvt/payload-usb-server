@@ -100,6 +100,7 @@
       // -- QUERY VALIDATION --
       var query = JSON.parse('<%- JSON.stringify(req.query) %>');
       if(query.name != null) {
+        $('#connection-title-text').text(`Waiting for connection from '${query.name}'`);
         if(localStorage.getItem("device-list") != null){
           const devices = JSON.parse(localStorage.getItem("device-list"));
           let i = 0;
@@ -114,8 +115,6 @@
             targetId = devices[found].id;
             socket.emit("registerListen", targetId);
             console.log("Registered listen");
-
-            $('#connection-title-text').text(`Waiting for connection from '${query.name}'`);
           } else {
             console.log("Did not find paired device with name: '" + query.name + "'");
           }
