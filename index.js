@@ -61,14 +61,14 @@ const app = express()
   
   // -- DEVICE CALLS --
   .get('/device-connect', function(req,res){
-    res.send(100);
+    res.sendStatus(100);
     let id = req.query.id;
     if (id != undefined) {
       registerDevice(id);
     }
   })
   .get('/device-ping', function(req, res){
-    res.send(100);
+    res.sendStatus(100);
     let id = req.query.id;
     if (id != undefined) {
       pingDevice(id);
@@ -137,7 +137,7 @@ function deregisterDevice(id) {
 }
 
 function registerDevice(id) {
-  devices.push(Device(id));
+  devices.push(new Device(id));
 
   if(listeningSockets[id]){
     io.to(listeningSockets[id]).emit("deviceConnected");
