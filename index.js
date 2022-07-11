@@ -148,6 +148,7 @@ function registerDevice(id) {
 function heartbeat(){
   devices.forEach(device => {
     if(Date.now() - device.pingTime > 4000){
+      console.log("Deregistered due to lack of ping: " + device.id);
       deregisterDevice(device.id);
     }
   });
