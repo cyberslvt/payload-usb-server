@@ -162,7 +162,7 @@ io.on('connection', async(socket) => {
 
   console.log("[SOCKET.IO] Connection");
 
-  io.on('registerListen', async(deviceId) => {
+  socket.on('registerListen', async(deviceId) => {
     listeningSockets[deviceId] = socket.id;
     targetDevice = deviceId;
     console.log("[SOCKET.IO] Registered listen for: " + deviceId);
