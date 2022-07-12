@@ -103,9 +103,9 @@ var actionQueue = {};
 
 // -- DEVICE FUNCTIONS --
 function fetchAction(deviceId){
-  if(actionQueue[id] !== undefined)
+  if(actionQueue[deviceId] !== undefined)
   {
-    var action = actionQueue[id].shift();
+    var action = actionQueue[deviceId].shift();
     if(action == undefined){
       return "";
     } else {
