@@ -93,7 +93,7 @@ class Device {
 // -- DATA --
 var devices = [];
 
-// device ID : socket ID
+// device ID : [socket ID]
 var listeningSockets = [];
 
 // -- DATA --
@@ -129,7 +129,9 @@ function deregisterDevice(id) {
   if(found > -1){
     let id = devices[found].id;
     if(listeningSockets[id]){
-      io.to(listeningSockets[id]).emit("deviceLost");
+      listeningSockets[id].forEach((sId) => {
+        io.to(sId).emit("deviceLost");
+      });
     }
 
     devices.splice(found, 1);
@@ -140,7 +142,9 @@ function registerDevice(id) {
   devices.push(new Device(id));
 
   if(listeningSockets[id]){
-    io.to(listeningSockets[id]).emit("deviceConnected");
+    listeningSockets[id].forEach((sId) => {
+      io.to(sId).emit("deviceConnected");
+    });
   }
 }
 
@@ -163,7 +167,12 @@ io.on('connection', async(socket) => {
   console.log("[SOCKET.IO] Connection");
 
   socket.on('registerListen', async(deviceId) => {
-    listeningSockets[deviceId] = socket.id;
+    if(listeningSockets[deviceId]){
+      listeningSockets[deviceId].push(socket.id);
+    } else {
+      listeningSockets[deviceId] = [socket.id];
+    }
+    
     targetDevice = deviceId;
     console.log("[SOCKET.IO] Registered listen for: " + deviceId);
   });
@@ -188,7 +197,12 @@ io.on('connection', async(socket) => {
   io.on('disconnect', () => {
     if(listeningSockets[targetDevice])
     {
-      delete listeningSockets[targetDevice];
+      const indexOfObject = listeningSockets[targetDevice].findIndex((sId) => {
+        return sId == socket.id;
+      });
+      if(indexOfObject > -1) {
+        listeningSockets[targetDevice].splice(indexOfObject, 1);
+      }
     }
   });
 });
