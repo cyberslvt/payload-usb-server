@@ -130,6 +130,7 @@ function pingDevice(id) {
     devices[found].ping();
   } else {
     console.log("Could not find device with id: " + id);
+    registerDevice(id);
   }
 }
 
