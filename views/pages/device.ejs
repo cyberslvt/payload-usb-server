@@ -64,7 +64,7 @@
     // -- DEVICE DATA POPULATION --
     function generateData(){
       let html = `
-        <button type="button" class="btn btn-dark">Toggle LED</button>
+        <button type="button" class="btn btn-dark" onclick="pushAction('toggleLED')">Toggle LED</button>
       `;
       $(html).appendTo($('#device-data-container'));
     }
