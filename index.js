@@ -213,6 +213,13 @@ io.on('connection', async(socket) => {
     }
   });
 
+  io.on('pushAction', (action) => {
+    if(actionQueue[targetDevice] !== undefined)
+    {
+      actionQueue[targetDevice].push(action);
+    }
+  });
+
   io.on('disconnect', () => {
     if(listeningSockets[targetDevice])
     {

@@ -93,6 +93,11 @@
       }
     }
 
+    var apCallback;
+    function pushAction(action){
+      apCallback(action);
+    }
+
     var socket = io();
     socket.on("connect", () => {
       var targetId = "";
@@ -135,6 +140,8 @@
           console.log("Recieved: " + val);
           x.connected = val;
         });
+
+        apCallback = function(action) {socket.emit('pushAction', action);}
       } else {
         document.location.href = "/";
       }
