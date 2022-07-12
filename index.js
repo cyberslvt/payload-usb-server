@@ -171,14 +171,14 @@ function registerDevice(id) {
 // this will count any devices that dont ping in 4s as disconnected
 function heartbeat(){
   devices.forEach(device => {
-    if(Date.now() - device.pingTime > 4000){
+    if(Date.now() - device.pingTime > 1000){
       console.log("Deregistered due to lack of ping: " + device.id);
       deregisterDevice(device.id);
     }
   });
 }
 
-setInterval(heartbeat, 4000);
+setInterval(heartbeat, 500);
 // -- DEVICE FUNCTIONS --
 
 io.on('connection', async(socket) => {
