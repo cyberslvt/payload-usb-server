@@ -172,13 +172,13 @@ function registerDevice(id) {
 function heartbeat(){
   devices.forEach(device => {
     if(Date.now() - device.pingTime > 1000){
-      console.log("Deregistered due to lack of ping: " + device.id);
+      console.log("Deregistered due to lack of ping: " + device.id + " (" + (Date.now() - device.pingTime) + "ms from last ping)");
       deregisterDevice(device.id);
     }
   });
 }
 
-setInterval(heartbeat, 500);
+setInterval(heartbeat, 1000);
 // -- DEVICE FUNCTIONS --
 
 io.on('connection', async(socket) => {
