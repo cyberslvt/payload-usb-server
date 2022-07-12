@@ -83,7 +83,7 @@
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
-      
+
       if(show){
         generateData();
       }
@@ -138,10 +138,10 @@
         socket.on('deviceConnected', function() {x.connected = true;});
         socket.on('deviceLost', function() {x.connected = false;});
 
-        socket.emit("isDeviceConnected", targetId, function(val) {
+        setTimeout(function(){socket.emit("isDeviceConnected", targetId, function(val) {
           console.log("Recieved: " + val);
           x.connected = val;
-        });
+        });}, 1000);
 
         apCallback = function(action) {socket.emit('pushAction', action);}
       } else {
