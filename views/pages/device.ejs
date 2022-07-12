@@ -84,10 +84,10 @@
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
       if(show){
-        setTimeout(generateData, 250);
+        setTimeout(generateData, 500);
       }
-      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");}, show ? 250 : 0);
-      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");}, show ? 250 : 0);
+      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");}, show ? 500 : 0);
+      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");}, show ? 500 : 0);
 
       if(!show) {
         setTimeout(clearData, 500);
