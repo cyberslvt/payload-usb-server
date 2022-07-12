@@ -109,6 +109,7 @@ function fetchAction(deviceId){
     if(action == undefined){
       return "";
     } else {
+      console.log("Sent action: " + action);
       return action;
     }
   }
