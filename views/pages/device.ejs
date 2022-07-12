@@ -76,10 +76,6 @@
     // -- DEVICE DATA POPULATION --
 
     function showDevice(show){
-      if(show){
-        generateData();
-      }
-
       let rem = 'hidden';
       let add = 'visible';
       if(show) {rem = 'visible'; add = 'hidden';}
@@ -87,8 +83,11 @@
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
-      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");
-      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");
+      if(show){
+        setTimeout(generateData, 250);
+      }
+      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");}, show ? 250 : 0);
+      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");}, show ? 250 : 0);
 
       if(!show) {
         setTimeout(clearData, 500);
