@@ -103,7 +103,6 @@ var actionQueue = {};
 
 // -- DEVICE FUNCTIONS --
 function fetchAction(deviceId){
-  console.log(actionQueue);
   if(actionQueue[deviceId] !== undefined)
   {
     var action = actionQueue[deviceId].shift();
