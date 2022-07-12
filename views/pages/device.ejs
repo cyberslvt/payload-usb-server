@@ -61,8 +61,12 @@
       }
     }
 
+    let clearDataTimeout;
+
     // -- DEVICE DATA POPULATION --
     function generateData(){
+      clearTimeout(clearDataTimeout);
+      clearData();
       let html = `
         <button type="button" class="btn btn-dark" onclick="pushAction('toggleLED')">Toggle LED</button>
       `;
@@ -91,7 +95,7 @@
       $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");
 
       if(!show) {
-        setTimeout(clearData, 500);
+        clearDataTimeout = setTimeout(clearData, 500);
       }
     }
 
