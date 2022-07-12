@@ -87,6 +87,7 @@ class Device {
   pingTime=0;
 
   constructor(id) {this.id = id;this.pingTime = Date.now();}
+  ping() {this.pingTime = Date.now();}
 }
 // -- CLASSES --
 
@@ -126,7 +127,7 @@ function pingDevice(id) {
   });
 
   if(found > -1){
-    devices[found].pingTime = Date.now();
+    devices[found].ping();
   } else {
     console.log("Could not find device with id: " + id);
   }
