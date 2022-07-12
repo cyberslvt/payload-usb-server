@@ -68,10 +68,10 @@ const app = express()
     }
   })
   .get('/device-ping', function(req, res){
-    res.send('OK');
     let id = req.query.id;
     if (id != undefined) {
       pingDevice(id);
+      res.json({"action":fetchAction(id)});
     }
   })
   // -- DEVICE CALLS --
@@ -94,11 +94,26 @@ class Device {
 var devices = [];
 
 // device ID : [socket ID]
-var listeningSockets = [];
+var listeningSockets = {};
+
+// device ID : [action]
+var actionQueue = {};
 
 // -- DATA --
 
 // -- DEVICE FUNCTIONS --
+function fetchAction(deviceId){
+  if(actionQueue[id] !== undefined)
+  {
+    var action = actionQueue[id].shift();
+    if(action == undefined){
+      return "";
+    } else {
+      return action;
+    }
+  }
+}
+
 function pingDevice(id) {
   let i = 0;
   let found = -1;
@@ -136,10 +151,14 @@ function deregisterDevice(id) {
 
     devices.splice(found, 1);
   }
+
+  delete actionQueue[id];
 }
 
 function registerDevice(id) {
   devices.push(new Device(id));
+
+  actionQueue[id] = [];
 
   if(listeningSockets[id]){
     listeningSockets[id].forEach((sId) => {
