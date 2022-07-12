@@ -86,8 +86,8 @@
       if(show){
         setTimeout(generateData, 150);
       }
-      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");}, show ? 150 : 0);
-      setTimeout(function(){$('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");}, show ? 150 : 0);
+      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");
+      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");
 
       if(!show) {
         setTimeout(clearData, 500);
