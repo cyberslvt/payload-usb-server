@@ -215,7 +215,7 @@ io.on('connection', async(socket) => {
     }
   });
 
-  io.on('pushAction', (action) => {
+  socket.on('pushAction', (action) => {
     if(actionQueue[targetDevice] !== undefined)
     {
       actionQueue[targetDevice].push(action);
