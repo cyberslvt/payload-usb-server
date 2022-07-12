@@ -31,7 +31,7 @@
     <div id="device-title-wrapper" class="my-3 p-3 bg-white rounded box-shadow">
       <h6 class="border-bottom border-gray pb-2 mb-0" id="device-title">Test Device</h6>
       <div class="pt-3"></div>
-      <div id="device-data-container" class="container">
+      <div id="device-data-container" class="container hidden-scaled">
 
       </div>
     </div>
@@ -76,6 +76,10 @@
     // -- DEVICE DATA POPULATION --
 
     function showDevice(show){
+      if(show){
+        generateData();
+      }
+
       let rem = 'hidden';
       let add = 'visible';
       if(show) {rem = 'visible'; add = 'hidden';}
@@ -83,13 +87,11 @@
       $('#connection-title').addClass(add);
       $('#connection-spinner').removeClass(rem);
       $('#connection-spinner').addClass(add);
-      $('#device-wrapper, #device-title-wrapper, #device-title').removeClass(add+"-scaled");
-      $('#device-wrapper, #device-title-wrapper, #device-title').addClass(rem+"-scaled");
+      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').removeClass(add+"-scaled");
+      $('#device-wrapper, #device-title-wrapper, #device-title, #device-data-container').addClass(rem+"-scaled");
 
-      if(show){
-        generateData();
-      } else {
-        clearData();
+      if(!show) {
+        setTimeout(clearData, 500);
       }
     }
 
