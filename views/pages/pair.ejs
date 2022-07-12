@@ -82,11 +82,11 @@
   </style>
 </head>
 
-<body class="text-center">
+<body>
 
   <%- include ("../partials/nav.ejs") %>
 
-    <form id="pair-form" class="form-pair">
+    <form id="pair-form" class="form-pair text-center">
       <h1 class="h3 mb-3 font-weight-normal">Pair new device</h1>
       <label for="inputId" class="sr-only">Pair ID</label>
       <input type="text" id="inputId" class="form-control id-device-indicator device-online" placeholder="ID" required="" autofocus="" autocomplete="off">
@@ -96,14 +96,14 @@
       <button class="btn btn-lg btn-dark btn-block" type="submit">Pair</button>
     </form>
 
-    <div id="pair-success-alert" class="alert alert-success center-block pair-alert" role="alert" style="display: none;">
+    <div id="pair-success-alert" class="alert alert-success center-block pair-alert text-center" role="alert" style="display: none;">
         Successfully paired device. <a id="success-alert-link" href="/device?id=" class="alert-link">Connect</a>
         <button type="button" class="close" onclick="closeAlerts()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
 
-    <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert" role="alert" style="display: none;">
+    <div id="pair-fail-alert" class="alert alert-danger center-block pair-alert text-center" role="alert" style="display: none;">
         Failed to pair device
         <button type="button" class="close" onclick="closeAlerts()">
             <span aria-hidden="true">&times;</span>
