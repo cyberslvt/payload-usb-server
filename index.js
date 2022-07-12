@@ -172,7 +172,7 @@ function registerDevice(id) {
 // this will count any devices that dont ping in 4s as disconnected
 function heartbeat(){
   devices.forEach(device => {
-    if(Date.now() - device.pingTime > 1000){
+    if(Date.now() - device.pingTime > 1500){
       console.log("Deregistered due to lack of ping: " + device.id + " (" + (Date.now() - device.pingTime) + "ms from last ping)");
       deregisterDevice(device.id);
     }
